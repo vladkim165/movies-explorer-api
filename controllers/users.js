@@ -20,7 +20,6 @@ module.exports.createUser = (req, res, next) => {
           if (e.code === 11000) {
             const err = new Error('Пользователь с данным email уже существует');
             err.statusCode = 409;
-
             next(err);
           }
           if (e.name === 'ValidationError') {

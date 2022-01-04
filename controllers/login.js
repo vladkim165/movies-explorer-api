@@ -26,9 +26,10 @@ const login = (req, res, next) => {
     });
 };
 
-const logout = (req, res) => {
+const logout = (req, res, next) => {
   res.clearCookie('jwt');
   res.status(200).send({ message: 'Вы успешно разлогинены' });
+  next();
 };
 
 module.exports = { login, logout };

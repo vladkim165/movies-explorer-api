@@ -66,7 +66,7 @@ module.exports.deleteMovie = (req, res, next) => {
         next(err);
       }
       return Movie.findByIdAndRemove(req.params.id)
-        .then(() => res.status(200).send(`Фильм успешно удален: ${movie}`));
+        .then(() => res.status(200).send(`Фильм успешно удален: ${{ message: movie }}`));
     })
     .catch((e) => {
       const err = new Error('Ошибка. Переданы некорректные данные');
