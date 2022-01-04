@@ -56,4 +56,4 @@ app.get('*', (_req, _res, next) => {
 
 app.use(errorHandler);
 
-app.listen(parseInt(PORT, 10));
+app.listen(PORT);
