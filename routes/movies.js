@@ -17,17 +17,17 @@ const isUrl = (value) => {
 
 router.post('/', celebrate({
   body: Joi.object().keys({
-    country: Joi.string().required().min(2).max(30),
-    director: Joi.string().required().min(2).max(30),
-    duration: Joi.number().required().min(1).max(30),
-    year: Joi.string().required().min(4).max(4),
-    description: Joi.string().required().min(2).max(30),
+    country: Joi.string().required(),
+    director: Joi.string().required(),
+    duration: Joi.number().required(),
+    year: Joi.string().required(),
+    description: Joi.string().required(),
     image: Joi.string().required().custom(isUrl),
     trailer: Joi.string().required().custom(isUrl),
     thumbnail: Joi.string().required().custom(isUrl),
-    nameRU: Joi.string().required().min(2).max(30),
-    nameEN: Joi.string().required().min(2).max(30),
-    movieId: Joi.string().hex().length(24),
+    nameRU: Joi.string().required(),
+    nameEN: Joi.string().required(),
+    movieId: Joi.number(),
   }),
 }), createMovie);
 

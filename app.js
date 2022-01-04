@@ -2,10 +2,10 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const { celebrate, Joi, errors } = require('celebrate');
-
-const { PORT = 3000 } = process.env;
-const app = express();
 require('dotenv').config();
+
+const { PORT = 3000, moviesData } = process.env;
+const app = express();
 const { login, logout } = require('./controllers/login');
 const { createUser } = require('./controllers/users');
 const auth = require('./middlewares/auth');
@@ -13,7 +13,7 @@ const errorHandler = require('./middlewares/errorHandler');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const allowedOrigins = require('./middlewares/cors');
 
-mongoose.connect('mongodb://localhost:27017/bitfilmsdb');
+mongoose.connect(moviesData);
 
 app.use(express.json());
 app.use(express.urlencoded({
@@ -56,4 +56,4 @@ app.get('*', (_req, _res, next) => {
 
 app.use(errorHandler);
 
-app.listen(PORT);
+app.listen(parseInt(PORT, 10));

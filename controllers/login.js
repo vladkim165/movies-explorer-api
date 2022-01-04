@@ -9,7 +9,7 @@ const login = (req, res, next) => {
     .then((user) => {
       const token = jwt.sign(
         { _id: user._id },
-        NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
+        NODE_ENV === 'production' ? JWT_SECRET : 'dev-key',
         { expiresIn: '7d' },
       );
       res.cookie('jwt', token, {
@@ -18,7 +18,7 @@ const login = (req, res, next) => {
       });
       res.status(200).send({ message: 'Вы успешно залогинены' });
     })
-    .catch((_e) => {
+    .catch(() => {
       const err = new Error('Введены неправильный email или пароль');
       err.statusCode = 401;
 
@@ -26,7 +26,7 @@ const login = (req, res, next) => {
     });
 };
 
-const logout = (req, res, _next) => {
+const logout = (req, res) => {
   res.clearCookie('jwt');
   res.status(200).send({ message: 'Вы успешно разлогинены' });
 };

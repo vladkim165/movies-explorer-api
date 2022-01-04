@@ -17,17 +17,19 @@ module.exports.createUser = (req, res, next) => {
       })
         .then(() => res.status(200).send({ message: 'Пользователь успешно создан' }))
         .catch((e) => {
-          if (e.name === 'MongoServerError' && e.code === 11000) {
+          if (e.code === 11000) {
             const err = new Error('Пользователь с данным email уже существует');
             err.statusCode = 409;
 
             next(err);
           }
-          const err = new Error('Ошибка. Переданы некорректные данные');
           if (e.name === 'ValidationError') {
+            const err = new Error('Ошибка. Переданы некорректные данные');
             err.statusCode = 400;
+            next(err);
+          } else {
+            next(e);
           }
-          next(err);
         });
     });
 };
@@ -63,10 +65,7 @@ module.exports.getUser = (req, res, next) => {
 
 module.exports.editProfile = (req, res, next) => {
   const { email, name } = req.body;
-  User.findByIdAndUpdate(req.user._id, { email, name }, {
-    new: true,
-    runValidators: true,
-  })
+  User.findById(req.user._id)
     .then((user) => {
       if (!user) {
         const err = new Error('Ошибка, пользователь не найден');
@@ -74,14 +73,25 @@ module.exports.editProfile = (req, res, next) => {
 
         next(err);
       }
-      return res.status(200).send({ email, name });
+      if (user.email !== email) {
+        const err = new Error('Ошибка, неверная почта');
+        err.statusCode = 409;
+
+        next(err);
+      }
+      return User.findByIdAndUpdate(req.user._id, { email, name }, {
+        new: true,
+        runValidators: true,
+      })
+        .then((updatedUser) => res.status(200).send(updatedUser));
     })
     .catch((e) => {
-      const err = new Error('Ошибка. Переданы некорректные данные');
       if (e.name === 'ValidationError') {
+        const err = new Error('Ошибка. Переданы некорректные данные');
         err.statusCode = 400;
+        next(err);
+      } else {
+        next(e);
       }
-
-      next(err);
     });
 };

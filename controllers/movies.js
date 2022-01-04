@@ -33,11 +33,13 @@ module.exports.createMovie = (req, res, next) => {
       res.status(200).send(movie);
     })
     .catch((e) => {
-      const err = new Error('Ошибка. Переданы некорректные данные');
       if (e.name === 'ValidationError') {
+        const err = new Error('Ошибка. Переданы некорректные данные');
         err.statusCode = 400;
+        next(err);
+      } else {
+        next(e);
       }
-      next(err);
     });
 };
 
@@ -50,20 +52,21 @@ module.exports.getMovies = (req, res, next) => {
 
 module.exports.deleteMovie = (req, res, next) => {
   const userId = req.user._id;
-  Movie.findByIdAndRemove(req.params.movieId)
+  Movie.findById(req.params.movieId)
     .then((movie) => {
       if (!movie) {
         const err = new Error('Ошибка. Фильм не найден');
-        err.statusCode = 401;
+        err.statusCode = 404;
         next(err);
       }
-      if (!movie.owner === userId) {
+      if (!movie.owner.equals(userId)) {
         const err = new Error('Ошибка. Фильм не сохранён в вашем профиле');
         err.statusCode = 403;
 
         next(err);
       }
-      return res.status(200).send(`Фильм успешно удален: ${movie}`);
+      return Movie.findByIdAndRemove(req.params.id)
+        .then(() => res.status(200).send(`Фильм успешно удален: ${movie}`));
     })
     .catch((e) => {
       const err = new Error('Ошибка. Переданы некорректные данные');

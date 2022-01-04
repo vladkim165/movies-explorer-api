@@ -20,7 +20,6 @@
   "homepage": "https://github.com/vladkim165/movies-explorer-api#readme",
   "devDependencies": {
     "eslint": "^8.2.0",
-    "eslint-plugin-react": "^7.27.0",
     "nodemon": "^2.0.15"
   },
   "dependencies": {
