@@ -1,6 +1,5 @@
 const express = require('express');
-const { celebrate, Joi, errors } = require('celebrate');
-const cookieParser = require('cookie-parser');
+const { celebrate, Joi } = require('celebrate');
 require('dotenv').config();
 
 const router = express.Router();
@@ -9,18 +8,6 @@ const movieRouter = require('./movies');
 const { login, logout } = require('../controllers/login');
 const { createUser } = require('../controllers/users');
 const auth = require('../middlewares/auth');
-const errorHandler = require('../middlewares/errorHandler');
-const { requestLogger, errorLogger } = require('../middlewares/logger');
-const allowedOrigins = require('../middlewares/cors');
-
-router.use(express.json());
-router.use(express.urlencoded({
-  extended: true,
-}));
-router.use(cookieParser());
-router.use(requestLogger);
-
-router.use(allowedOrigins);
 
 router.post('/signin', celebrate({
   body: Joi.object().keys({
@@ -47,11 +34,5 @@ router.get('*', (_req, _res, next) => {
 
   next(err);
 });
-
-router.use(errorLogger);
-
-router.use(errors());
-
-router.use(errorHandler);
 
 module.exports = router;

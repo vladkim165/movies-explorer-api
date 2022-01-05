@@ -72,12 +72,6 @@ module.exports.editProfile = (req, res, next) => {
 
         next(err);
       }
-      if (user.email !== email) {
-        const err = new Error('Ошибка, неверная почта');
-        err.statusCode = 409;
-
-        next(err);
-      }
       return User.findByIdAndUpdate(req.user._id, { email, name }, {
         new: true,
         runValidators: true,
@@ -88,6 +82,12 @@ module.exports.editProfile = (req, res, next) => {
       if (e.name === 'ValidationError') {
         const err = new Error('Ошибка. Переданы некорректные данные');
         err.statusCode = 400;
+        next(err);
+      }
+      if (e.code === 11000) {
+        const err = new Error('Ошибка, неверная почта');
+        err.statusCode = 409;
+
         next(err);
       } else {
         next(e);
