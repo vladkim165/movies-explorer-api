@@ -11,22 +11,22 @@ const router = require('./routes/index');
 const { PORT = 3000, moviesData = 'mongodb://localhost:27017/moviesdb' } = process.env;
 const app = express();
 
-router.use(express.json());
-router.use(express.urlencoded({
+app.use(express.json());
+app.use(express.urlencoded({
   extended: true,
 }));
-router.use(cookieParser());
-router.use(requestLogger);
+app.use(cookieParser());
+app.use(requestLogger);
 
-router.use(allowedOrigins);
+app.use(allowedOrigins);
 mongoose.connect(moviesData);
 
 app.use(router);
 
-router.use(errorLogger);
+app.use(errorLogger);
 
-router.use(errors());
+app.use(errors());
 
-router.use(errorHandler);
+app.use(errorHandler);
 
 app.listen(PORT);
