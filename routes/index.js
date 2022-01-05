@@ -1,6 +1,5 @@
 const express = require('express');
 const { celebrate, Joi } = require('celebrate');
-require('dotenv').config();
 
 const router = express.Router();
 const userRouter = require('./users');
