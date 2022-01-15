@@ -27,7 +27,7 @@ router.use(auth);
 router.use('/users', userRouter);
 router.use('/movies', movieRouter);
 
-router.get('*', (_req, _res, next) => {
+router.all('*', (_req, _res, next) => {
   const err = new Error('Запрашиваемый ресурс не найден');
   err.statusCode = 404;
 
