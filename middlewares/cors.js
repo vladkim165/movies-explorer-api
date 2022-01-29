@@ -1,8 +1,8 @@
 const allowedCors = [
-  'https://mesto-prod.nomoredomains.rocks/',
-  'http://mesto-prod.nomoredomains.rocks/',
-  'https://api.mesto-prod.nomoredomains.rocks/',
-  'http://api.mesto-prod.nomoredomains.rocks/',
+  'https://movies-explorer-prod.nomoredomains.rocks/',
+  'http://movies-explorer-prod.nomoredomains.rocks/',
+  'https://api.movies-explorer-prod.nomoredomains.rocks/',
+  'http://api.movies-explorer-prod.nomoredomains.rocks/',
   'localhost:3000',
 ];
 
