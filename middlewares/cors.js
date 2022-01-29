@@ -3,7 +3,7 @@ const allowedCors = [
   'http://movies-explorer-prod.nomoredomains.rocks/',
   'https://api.movies-explorer-prod.nomoredomains.rocks/',
   'http://api.movies-explorer-prod.nomoredomains.rocks/',
-  'http://localhost:3000/',
+  'http://localhost',
 ];
 
 module.exports = (req, res, next) => {
@@ -16,8 +16,7 @@ module.exports = (req, res, next) => {
   }
 
   const { origin } = req.headers;
-  console.log(origin);
-  console.log(allowedCors.includes(origin));
+
   if (allowedCors.includes(origin)) {
     res.header('Access-Control-Allow-Origin', origin);
   }
