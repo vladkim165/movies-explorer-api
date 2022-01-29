@@ -3,7 +3,7 @@ const allowedCors = [
   'http://movies-explorer-prod.nomoredomains.rocks/',
   'https://api.movies-explorer-prod.nomoredomains.rocks/',
   'http://api.movies-explorer-prod.nomoredomains.rocks/',
-  'localhost:3000',
+  'http://localhost:3000/signup',
 ];
 
 module.exports = (req, res, next) => {
