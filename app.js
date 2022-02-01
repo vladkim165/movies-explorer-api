@@ -19,8 +19,9 @@ app.use(express.urlencoded({
 app.use(cookieParser());
 app.use(requestLogger);
 
-app.use(allowedOrigins);
 mongoose.connect(moviesData);
+
+app.use(allowedOrigins);
 
 app.use(router);
 
