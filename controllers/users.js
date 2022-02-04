@@ -15,7 +15,7 @@ module.exports.createUser = (req, res, next) => {
         password: hash,
         name,
       })
-        .then(() => res.status(200).send({ message: 'Пользователь успешно создан' }))
+        .then((data) => res.status(200).send({ message: data }))
         .catch((e) => {
           if (e.code === 11000) {
             const err = new Error('Пользователь с данным email уже существует');
