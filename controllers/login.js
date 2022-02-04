@@ -16,7 +16,8 @@ const login = (req, res, next) => {
         maxAge: 3600000 * 24 * 7,
         httpOnly: true,
       });
-      res.status(200).send({ message: user });
+      const { name } = user;
+      return res.status(200).send({ message: { name, email } });
     })
     .catch(() => {
       const err = new Error('Введены неправильный email или пароль');
