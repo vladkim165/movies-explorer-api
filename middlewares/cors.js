@@ -9,11 +9,14 @@
 
 module.exports = (req, res, next) => {
   const { method } = req;
-  const requestHeaders = req.headers['access-control-request-headers']
 
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   if (method === 'OPTIONS') {
+    const requestHeaders = req.headers['access-control-request-headers'];
     res.header('Access-Control-Allow-Methods', requestHeaders);
+    const { origin } = req.headers;
+    res.header('Access-Control-Allow-Origin', origin);
+
     return res.end();
   }
 
