@@ -1,8 +1,8 @@
 const allowedCors = [
-  'https://movies-explorer-prod.nomoredomains.rocks/',
-  'http://movies-explorer-prod.nomoredomains.rocks/',
-  'https://api.movies-explorer-prod.nomoredomains.rocks/',
-  'http://api.movies-explorer-prod.nomoredomains.rocks/',
+  'https://movies-explorer-prod.nomoredomains.rocks',
+  'http://movies-explorer-prod.nomoredomains.rocks',
+  'https://api.movies-explorer-prod.nomoredomains.rocks',
+  'http://api.movies-explorer-prod.nomoredomains.rocks',
   'http://localhost/3000',
 ];
 
