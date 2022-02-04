@@ -3,20 +3,22 @@
 //   'http://movies-explorer-prod.nomoredomains.rocks/',
 //   'https://api.movies-explorer-prod.nomoredomains.rocks/',
 //   'http://api.movies-explorer-prod.nomoredomains.rocks/',
+//   'http://localhost/3000'
 //   'http://localhost',
 // ];
 
 module.exports = (req, res, next) => {
   const { method } = req;
-  const requestHeaders = req.headers['Access-Control-Request-Headers'];
+  const requestHeaders = req.headers['access-control-request-headers']
 
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   if (method === 'OPTIONS') {
     res.header('Access-Control-Allow-Methods', requestHeaders);
     return res.end();
   }
 
-  // const { origin } = req.headers;
-  res.header('Access-Control-Allow-Origin', '*');
+  const { origin } = req.headers;
+  res.header('Access-Control-Allow-Origin', origin);
   // if (allowedCors.includes(origin)) {
   //   res.header('Access-Control-Allow-Origin', origin);
   // }
