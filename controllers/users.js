@@ -1,9 +1,6 @@
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
 
 const User = require('../models/user');
-
-const { NODE_ENV, JWT_SECRET } = process.env;
 
 module.exports.createUser = (req, res, next) => {
   const {
@@ -19,18 +16,7 @@ module.exports.createUser = (req, res, next) => {
         password: hash,
         name,
       })
-        .then((user) => {
-          const token = jwt.sign(
-            { _id: user._id },
-            NODE_ENV === 'production' ? JWT_SECRET : 'dev-key',
-            { expiresIn: '7d' },
-          );
-          res.cookie('jwt', token, {
-            maxAge: 3600000 * 24 * 7,
-            httpOnly: true,
-          });
-          res.status(200).send({ message: user });
-        })
+        .then((user) => res.status(200).send({ message: user }))
         .catch((e) => {
           if (e.code === 11000) {
             const err = new Error('Пользователь с данным email уже существует');
