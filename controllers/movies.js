@@ -34,7 +34,7 @@ module.exports.createMovie = (req, res, next) => {
     })
     .catch((e) => {
       if (e.name === 'ValidationError') {
-        const err = new Error('Ошибка. Переданы некорректные данные');
+        const err = new Error(e);
         err.statusCode = 400;
         next(err);
       } else {
@@ -69,7 +69,7 @@ module.exports.deleteMovie = (req, res, next) => {
         .then(() => res.status(200).send({ message: movie }));
     })
     .catch((e) => {
-      const err = new Error('Ошибка. Переданы некорректные данные');
+      const err = new Error(e);
       if (e.name === 'CastError') {
         err.statusCode = 400;
       }
